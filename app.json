@@ -2,6 +2,7 @@
   "expo": {
     "name": "eloom_mobile",
     "slug": "eloom_mobile",
+    "scheme": ["eloom-mobile"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,10 +22,22 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.umang_lilha.eloom_mobile"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "eb038e5d-47d8-4229-8410-e4dd3dccbca7"
+      }
     }
   }
 }
