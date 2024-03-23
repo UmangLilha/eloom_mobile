@@ -1,47 +1,66 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, TextInput, Button, Alert } from 'react-native';
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
+import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
+import { getAuth, signInWithPhoneNumber, signInWithCredential, PhoneAuthProvider, getReactNativePersistence, initializeAuth } from 'firebase/auth';
 import { app } from '../../firebase/firestore';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const auth = getAuth(app);
+const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(ReactNativeAsyncStorage)
+});
 
 const Login = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [code, setCode] = useState('');
-  const [verificationId, setVerificationId] = useState(null);
+  const [verificationId,setVerificationId] = useState('');
+  const recaptchaVerifier = useRef(null);
 
-  const sendVerification = () => {
-    const phoneProvider = new RecaptchaVerifier(auth,'recaptcha-container',{});
-    console.log(`phoneProvider:${phoneProvider}`);
-    signInWithPhoneNumber(auth, phoneNumber, phoneProvider)
+  const sendVerification = async () => {
+    //const confirmCode = await auth().signInWithPhoneNumber(phoneNumber);
+
+    // const phoneProvider = new firebase.auth.PhoneAuthProvider();
+    // phoneProvider.verifyPhoneNumber(phoneNumber,recaptchaVerifier.current)
+    // .then(setVerificationId);
+    // setPhoneNumber('');
+    // let promise = "clear";
+    console.log(app.options);
+     signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier.current)
       .then((confirmationResult) => {
+        
         setVerificationId(confirmationResult.verificationId);
-      })
+        console.log(`verificationid:${confirmationResult.verificationId}`);      
+    })
       .catch((error) => {
         console.error(error);
         Alert.alert('Error sending verification code', error.message);
       });
   };
 
-  const confirmCode = () => {
-    const credential = RecaptchaVerifier.phoneAuthProvider.credential(
-      verificationId,
-      code
-    );
+  const confirmCode = async () => {
+  try {
+    const credential = PhoneAuthProvider.credential(verificationId, code);
+    const result = await signInWithCredential(auth, credential);
+    
+   
+    console.log('User signed in with phone number');
+    console.log(`User UID: ${result.user.uid}`);
+    
+    
+  } catch (error) {
+    console.error(error);
+    Alert.alert('Error verifying code', error.message);
 
-    auth.signInWithCredential(credential)
-      .then((result) => {
-        console.log('User signed in with phone number');
-      })
-      .catch((error) => {
-        console.error(error);
-        Alert.alert('Error verifying code', error.message);
-      });
-  };
+  }
+};
 
   return (
     <View>
+        <FirebaseRecaptchaVerifierModal
+        ref={recaptchaVerifier}
+        firebaseConfig={app.options} // Ensure your Firebase configuration is passed here
+        attemptInvisibleVerification={true}
+      />
       <TextInput
         value={phoneNumber}
         onChangeText={setPhoneNumber}
@@ -56,9 +75,6 @@ const Login = () => {
         placeholder="Verification code"
       />
       <Button title="Confirm Code" onPress={confirmCode} />
-
-      {/* Invisible container for the reCAPTCHA */}
-      {/* <div id="recaptcha-container" /> */}
     </View>
   );
 };

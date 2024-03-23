@@ -2,13 +2,14 @@ import React from 'react';
 import { StyleSheet, SafeAreaView, StatusBar, Platform, Dimensions } from 'react-native';
 import { Button } from 'react-native-elements';
 import ListView from './components/ListView';
+import Login from './components/Login'
 
 
 
 export default function App() {
   return (
       <SafeAreaView style={styles.container} >
-            <ListView/>
+            <Login/>
         </SafeAreaView>
   );
 }
