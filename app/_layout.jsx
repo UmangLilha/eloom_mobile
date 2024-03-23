@@ -8,6 +8,9 @@ export default function _layout(){
             <Stack.Screen name="index" options={{ 
                 title: 'Home'
                 }}/>
+            <Stack.Screen name="components/ListView" options={{ 
+                title: 'Home'
+                }}/>
             <Stack.Screen name="components/EditDesc" options={{ 
                 title: 'Description'
                 }}/>
