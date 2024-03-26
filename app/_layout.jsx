@@ -1,36 +1,63 @@
-import React from "react"
-import {Stack} from 'expo-router'
+import React from "react";
+import { Stack } from "expo-router";
 
-export default function _layout(){
-
-    return(
-        <Stack>
-            <Stack.Screen name="index" options={{ 
-                title: 'Home'
-                }}/>
-            <Stack.Screen name="components/ListView" options={{ 
-                title: 'Home'
-                }}/>
-            <Stack.Screen name="components/EditDesc" options={{ 
-                title: 'Description'
-                }}/>
-             <Stack.Screen name="components/EditContact" options={{ 
-                title: 'Contact details'
-                }}/> 
-            <Stack.Screen name="components/EditImage" options={{ 
-                title: 'Logo'
-                }}/> 
-             <Stack.Screen name="components/EditCategories" options={{ 
-                title: 'Categories'
-                }}/> 
-            <Stack.Screen
-                name="components/[id]"
-                options={({ route }) => ({
-                title: decodeURIComponent(route.params.id) 
-                })}
-/>
-
-        </Stack>
-    )
-
+export default function _layout() {
+  return (
+    <Stack>
+      <Stack.Screen
+        name="index"
+        options={{
+          title: "Home",
+        }}
+      />
+      <Stack.Screen
+        name="components/Login"
+        options={{
+          title: "Login",
+        }}
+      />
+      <Stack.Screen
+        name="components/ListView"
+        options={{
+          title: "Console",
+        }}
+      />
+      <Stack.Screen
+        name="components/StoreId"
+        options={{
+          title: "StoreId",
+        }}
+      />
+      <Stack.Screen
+        name="components/EditDesc"
+        options={{
+          title: "Description",
+        }}
+      />
+      <Stack.Screen
+        name="components/EditContact"
+        options={{
+          title: "Contact details",
+        }}
+      />
+      <Stack.Screen
+        name="components/EditImage"
+        options={{
+          title: "Logo",
+        }}
+      />
+      <Stack.Screen
+        name="components/EditCategories"
+        options={{
+          title: "Categories",
+        }}
+      />
+      <Stack.Screen
+        name="components/[id]"
+        options={({ route }) => ({
+          title: decodeURIComponent(route.params.id),
+        })}
+      />
+    </Stack>
+  );
 }

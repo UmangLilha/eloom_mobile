@@ -59,9 +59,9 @@ const Login = () => {
       if (!storeDocSnapshot.exists()) {
         await setDoc(storeDoc, { uid: result.user.uid });
         console.log("user added");
-        router.push("./components/ListView");
+        router.push("/components/StoreId");
       } else {
-        router.push("./components/ListView");
+        router.push("/components/ListView");
       }
     } catch (error) {
       console.error(error);
@@ -105,6 +105,7 @@ const Login = () => {
           value={code}
           onChangeText={setCode}
           editable={!isLoading}
+          keyboardType="numeric"
         />
       </View>
       <TouchableOpacity style={styles.button} onPress={confirmCode}>
