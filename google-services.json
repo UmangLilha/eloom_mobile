@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "884448076828",
+    "firebase_url": "https://eloom-e079f-default-rtdb.firebaseio.com",
+    "project_id": "eloom-e079f",
+    "storage_bucket": "eloom-e079f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884448076828:android:bd6b9e259b0b7cf784ebd9",
+        "android_client_info": {
+          "package_name": "com.umang_lilha.eloom_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtjgmD4RHkKPtIcFx75J7WRFePRieVlvA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
