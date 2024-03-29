@@ -17,6 +17,12 @@ export default function _layout() {
         }}
       />
       <Stack.Screen
+        name="components/StoreId"
+        options={{
+          title: "Store Id",
+        }}
+      />
+      <Stack.Screen
         name="components/ListView"
         options={{
           title: "Console",

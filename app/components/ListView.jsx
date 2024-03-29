@@ -1,14 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FlatList, Linking, Alert } from "react-native";
 import ListItem from "./ListItem";
 import { DATA } from "../../data/data";
 import { router, useRouter } from "expo-router";
 import { signOut } from "firebase/auth";
-import { auth } from "../../firebase/firestore";
+import { auth, app } from "../../firebase/firestore";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
+import * as ImagePicker from "expo-image-picker";
+
+const firestore = getFirestore(app);
 
 const ListView = () => {
+  const [storeid, setStoreId] = useState("");
+
+  useEffect(() => {
+    const onStart = async () => {
+      const user = auth.currentUser;
+      const docRef = doc(firestore, `stores/${user.uid}`);
+      const snap = await getDoc(docRef);
+      if (snap.exists()) {
+        setStoreId(snap.data().storeid);
+      } else {
+        Alert.alert("Error occured");
+      }
+    };
+    const requestPermission = async () => {
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        alert("Sorry, we need camera roll permissions to make this work!");
+      }
+    };
+    onStart();
+    requestPermission();
+  }, []);
   const handleViewPage = () => {
-    const url = "https://www.eloom.in/nitya_creation";
+    const url = `https://www.eloom.in/store/${storeid}`;
     Linking.openURL(url).catch((err) => {
       console.error("Failed opening page because: ", err);
       Alert.alert("Failed to open page");

@@ -47,7 +47,7 @@ const StoreId = () => {
     try {
       setIsLoading(true);
       await setDoc(docRef, { storeid: storeId }, { merge: true });
-      router.push("/components/ListView");
+      router.replace("/components/ListView");
     } catch (error) {
       Alert.alert("Check internet connection");
     }
@@ -79,6 +79,8 @@ const StoreId = () => {
         value={storeId}
         onChangeText={handleInputChange}
         editable={!isLoading}
+        keyboardType="default"
+        autoCapitalize="none"
       />
       {errorMessage.length > 0 && (
         <Text style={styles.error}>{errorMessage}</Text>

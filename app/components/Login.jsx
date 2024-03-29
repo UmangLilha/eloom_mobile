@@ -60,6 +60,7 @@ const Login = () => {
   };
 
   const handleSignUp = () => {
+    setIsLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         sendEmailVerification(userCredential.user)
@@ -74,6 +75,10 @@ const Login = () => {
       .catch((e) => {
         setError(e.message);
       });
+    setEmail("");
+    setPassword("");
+    setError("");
+    setIsLoading(false);
   };
 
   const handlePasswordReset = () => {
@@ -106,10 +111,10 @@ const Login = () => {
         value={password}
         onChangeText={setPassword}
         editable={!isLoading}
-        secureTextEntry
+        secureTextEntry={passwordVisibility}
         right={
           <TextInput.Icon
-            name={passwordVisibility ? "eye" : "eye-off"}
+            icon={!passwordVisibility ? "eye" : "eye-off"}
             onPress={togglePasswordVisibility}
           />
         }
@@ -120,21 +125,11 @@ const Login = () => {
         <ActivityIndicator size="medium" color="black" />
       ) : (
         <>
-          <Button
-            mode="contained"
-            onPress={handleLogin}
-            style={styles.button}
-            disabled={error.length > 0}
-          >
+          <Button mode="contained" onPress={handleLogin} style={styles.button}>
             Login
           </Button>
 
-          <Button
-            mode="contained"
-            onPress={handleSignUp}
-            style={styles.button}
-            disabled={error.length > 0}
-          >
+          <Button mode="contained" onPress={handleSignUp} style={styles.button}>
             Sign Up
           </Button>
 
