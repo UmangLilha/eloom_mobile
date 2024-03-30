@@ -45,10 +45,10 @@ const ListView = () => {
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
-        router.replace("/");
+        Alert.alert("Signed out successfully.");
       })
       .catch((error) => {
-        Alert.alert("Sign our error", error.message);
+        Alert.alert("Sign out error", error.message);
       });
   };
 

@@ -46,9 +46,10 @@ const Login = () => {
           await setDoc(storeDoc, { uid: userCredential.user.uid });
           console.log("user added");
           router.replace("/components/StoreId");
-        } else {
-          router.replace("/components/ListView");
         }
+        // else {
+        //   router.replace("/components/ListView");
+        // }
         setEmail("");
         setPassword("");
         setError("");

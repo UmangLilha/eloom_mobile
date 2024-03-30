@@ -3,17 +3,22 @@ import { StyleSheet, SafeAreaView, StatusBar, Platform } from "react-native";
 import ListView from "./components/ListView";
 import Login from "./components/Login";
 import { auth } from "../firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function App() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
 
   useEffect(() => {
-    const user = auth.currentUser;
-    if (user) {
-      setUserLoggedIn(true);
-    } else {
-      setUserLoggedIn(false);
-    }
+    //
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserLoggedIn(true);
+      } else {
+        setUserLoggedIn(false);
+      }
+    });
+
+    return unsubscribe;
   }, []);
 
   return (
